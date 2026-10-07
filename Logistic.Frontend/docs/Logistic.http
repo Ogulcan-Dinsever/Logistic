@@ -1,0 +1,74 @@
+# Yalnız mevcut canlı backend endpoint'leri.
+# Değişkenleri kendi yerel hesap / ürün / raf kimliklerinle doldur.
+# POST istekleri yerel veritabanındaki stokları ve kayıtları değiştirir.
+@baseUrl = https://localhost:7228/api
+@token = LOGIN_CEVABINDAKI_TOKEN
+@productId = URUN_ID
+@receivingId = KABUL_RAF_ID
+@receiptKey = YENI_KABUL_ISLEM_ANAHTARI
+@putawayKey = YENI_YERLESTIRME_ISLEM_ANAHTARI
+
+### Kullanıcı kaydı
+POST {{baseUrl}}/Logistic/User/CreateUser
+Content-Type: application/json
+
+{ "name": "Elif", "surName": "Yılmaz", "email": "user@example.com", "password": "Demo123!", "isAdmin": false, "createdBy": "self-registration" }
+
+### Giriş
+POST {{baseUrl}}/Logistic/User/Login
+Content-Type: application/json
+
+{ "email": "user@example.com", "password": "Demo123!" }
+
+### Ürün listesi
+GET {{baseUrl}}/Product?pageId=1&take=1000
+Authorization: Bearer {{token}}
+
+### Ürün oluşturma (Admin token gerekir)
+POST {{baseUrl}}/Product
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "name": "USB-C Şarj Kablosu", "sku": "ELK-001", "barcode": "8690000001001", "category": "Elektronik", "unit": "adet", "salePrice": 249.90, "minStock": 5 }
+
+### Raf listesi
+GET {{baseUrl}}/Shelf?pageId=1&take=1000
+Authorization: Bearer {{token}}
+
+### KABUL rafı oluşturma (Admin; yalnız yoksa çalıştır)
+POST {{baseUrl}}/Shelf
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "code": "KABUL", "zone": "Mal kabul", "capacity": 10000 }
+
+### Depolama rafı oluşturma (Admin)
+POST {{baseUrl}}/Shelf
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "code": "A-01", "zone": "A bölgesi", "capacity": 600 }
+
+### Mal kabul (aynı işlemi tekrar gönderirken aynı anahtarı koru)
+POST {{baseUrl}}/Receipt
+Authorization: Bearer {{token}}
+Idempotency-Key: {{receiptKey}}
+Content-Type: application/json
+
+{ "supplier": "Marmara Tedarik", "productId": "{{productId}}", "quantity": 10, "note": "Teslim alındı" }
+
+### Mal kabul listesi
+GET {{baseUrl}}/Receipt?pageId=1&take=1000
+Authorization: Bearer {{token}}
+
+### RF ile rafa yerleştirme
+POST {{baseUrl}}/Stock/Putaway
+Authorization: Bearer {{token}}
+Idempotency-Key: {{putawayKey}}
+Content-Type: application/json
+
+{ "productBarcode": "8690000001001", "sourceShelfId": "{{receivingId}}", "targetShelfCode": "A-01", "quantity": 3 }
+
+### Stok listesi
+GET {{baseUrl}}/Stock?pageId=1&take=1000
+Authorization: Bearer {{token}}

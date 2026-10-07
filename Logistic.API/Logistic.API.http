@@ -1,0 +1,7 @@
+@Logistic.API_HostAddress = https://localhost:7228
+
+### Mevcut canlı ürün listesi
+GET {{Logistic.API_HostAddress}}/api/Product?pageId=1&take=1000
+Accept: application/json
+
+### Diğer canlı örnekler: ../Logistic.Frontend/docs/Logistic.http

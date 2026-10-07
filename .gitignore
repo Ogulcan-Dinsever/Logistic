@@ -1,0 +1,35 @@
+# .NET and Visual Studio
+.vs/
+.idea/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Frontend
+**/node_modules/
+**/dist/
+*.tsbuildinfo
+
+# Private settings and runtime output
+.env*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+**/Logs/
+*.log
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Test and temporary output
+**/TestResults/
+**/coverage/
+**/playwright-report/
+**/test-results/
+*.tmp
+.DS_Store
+Thumbs.db
