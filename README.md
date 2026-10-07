@@ -3,7 +3,7 @@
 ![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
 ![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
 
-Logistic, iş görüşmem için geliştirdiğim küçük bir depo yönetim projesi. Mal kabulden rafa yerleştirmeye kadar sade, çalışan bir akış hazırlamak istedim.
+Logistic, kendi gelişimim için geliştirdiğim küçük bir depo yönetim projesi. Mal kabulden rafa yerleştirmeye kadar sade, çalışan bir akış hazırlamak istedim.
 
 Backend'de .NET 10 ve MongoDB, arayüzde React ve TypeScript kullandım. Barkod okuyucum olmadığı için RF terminalinde okutmayı simüle ettim.
 
